@@ -8,7 +8,7 @@ CREATE TABLE gestion_evenements.salles(
 );
 
 CREATE TABLE gestion_evenements.festivals (
-	id_festival SERIAL PRIMARY KEY,
+	id_festival SERIAL PRIMARY KEY ,
 	nom VARCHAR(100) NOT NULL CHECK (trim(nom) <> '')
 );
 
@@ -131,12 +131,12 @@ BEGIN
     INSERT INTO gestion_evenements.evenements(
         salle, date_evenement, nom, prix, festival, nb_places_restantes
     ) VALUES (
-        _id_salle, _date_evenement, _nom, _prix::MONEY, _id_festival,
+        _id_salle, _date_evenement, _nom, _prix, _id_festival,
         (SELECT s.capacite FROM gestion_evenements.salles s WHERE s.id_salle = _id_salle)
     );
 END;
 $$ LANGUAGE plpgsql;
-----
+--ajout d'une reservation
     CREATE OR REPLACE FUNCTION gestion_evenements.ajouter_une_reservation(
     _salle INTEGER,
     _date_evenement DATE,
@@ -199,8 +199,8 @@ $$ LANGUAGE plpgsql;
 
 -- Exemples d'utilisation
 SELECT gestion_evenements.ajouter_salle('forest national', 'Bruxelles', 3000);
-SELECT gestion_evenements.ajouter_evenement(1, '2025-05-04', 'concert de Beyoncé', 200, NULL);
-SELECT gestion_evenements.ajouter_une_reservation(1,'2025-05-04',23,2);
+SELECT gestion_evenements.ajouter_evenement(1, '2025-05-04', 'concert de Beyoncé', 200, 1);
+SELECT gestion_evenements.ajouter_une_reservation(1, '2025-05-04', 12345, 2, 100);
 --******************TEST*****************-
 SELECT * FROM gestion_evenements.evenements;
 SELECT * FROM gestion_evenements.salles;
