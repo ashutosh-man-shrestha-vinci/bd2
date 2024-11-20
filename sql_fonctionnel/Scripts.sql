@@ -4,7 +4,7 @@ CREATE TABLE gestion_evenements.salles(
 	id_salle SERIAL PRIMARY KEY,
 	nom VARCHAR(50) NOT NULL CHECK (trim(nom) <> ''),
 	ville VARCHAR(30) NOT NULL CHECK (trim(ville) <> ''),
-	capacite INTEGER NOT NULL CHECK (capacite > 0)
+	capacite INTEGER NOT NULL CHECK (capacite  > 0)
 );
 
 CREATE TABLE gestion_evenements.festivals (
